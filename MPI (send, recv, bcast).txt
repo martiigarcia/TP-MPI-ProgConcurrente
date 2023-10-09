@@ -1,0 +1,22 @@
+MPI.Init(String[] args): Inicializa el entorno MPI. Se llama al comienzo de la aplicación MPI.
+MPI.Finalize(): Finaliza el entorno MPI. Se llama antes de que la aplicación termine.
+
+MPI.COMM_WORLD: Representa el canal o comunicador global que incluye todos los procesos.
+MPI.COMM_WORLD.Rank(): Devuelve el id de un proceso.
+MPI.COMM_WORLD.Size(): Devuelve el número de procesos.
+
+MPI.COMM_WORLD.Send(Object buf, int offset, int count, Datatype type, int dest, int tag): envia mensaje a otro proceso.
+	-buf: objeto a enviar en el mensaje.
+	-offset: especifica la posición inicial dentro de buf desde la cual se comenzará a enviar los datos. Se puede elegir enviar solo una parte 		específica de los datos en el búfer.
+	-count: indica la cantidad de elementos de datos que se enviarán desde el búfer.
+	-type: tipo de dato de los elementos de buf.
+	-dest: destino donde se manda el mensaje, es el id del proceso que recibe el mensaje.
+	-tag: identificador asociado al mensaje. Se puede usar etiquetas para distinguir diferentes tipos de mensajes entre procesos. 
+
+MPI.COMM_WORLD.Recv(Object buf, int offset, int count, Datatype type, int from, int tag): recibe mensaje de otro proceso.
+	-Aplica igual que para el Send, salvo que el buf recibe los datos, y la variable from es el id del proceso desde donde se quiere recibir el mensaje.
+
+
+MPI.COMM_WORLD.Bcast(Object buf, int offset, int count, Datatype type, int root): manda un mensaje desde un proceso raiz hacia el resto de procesos.
+
+En el ejemplo de la practica: MPI.COMM_WORLD.Bcast(numero, 0, MPI.INT, MPI.COMM_WORLD.Get_size() - 1): El ultimo argumento es el rango del proceso emisor (proceso raíz) que envía el valor. En esta expresión, MPI.COMM_WORLD.Get_size() devuelve el número total de procesos en MPI para indicar a cuantos procesos mandar el mensaje, y MPI.COMM_WORLD.Get_size() - 1 se utiliza para indicar que el proceso con el rango igual al tamaño del comunicador menos uno actuará como el proceso raíz que envía el valor.
