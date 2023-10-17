@@ -2,14 +2,11 @@ package entregables;
 
 import mpi.*;
 
-import java.util.Arrays;
-
 public class Ejercicio1 {
 
-    //    1. Comunicación Simple:
+//    1. Comunicación Simple:
 //    Crea un programa en Java utilizando MPJ Express que envíe un mensaje desde un proceso
 //    maestro (rango 0) a un proceso esclavo (rango 1). El mensaje puede ser un simple saludo.
-
 
     public static void main(String[] args) throws MPIException {
         MPI.Init(args);
