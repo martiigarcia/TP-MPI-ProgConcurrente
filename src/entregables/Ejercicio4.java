@@ -19,5 +19,7 @@ public class Ejercicio4 {
             MPI.Finalize();
             return;
         }
+
+
     }
 }
