@@ -1,5 +1,7 @@
+package ejemplosExplicacion;
+
 import mpi.*;
-public class MPJExample {
+public class Explicacion1 {
     public static void main(String[] args) throws MPIException {
         MPI.Init(args);
         int rank = MPI.COMM_WORLD.Rank();

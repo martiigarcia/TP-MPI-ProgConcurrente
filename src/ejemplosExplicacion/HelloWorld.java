@@ -1,3 +1,5 @@
+package ejemplosExplicacion;
+
 import mpi.*;
 
 public class HelloWorld {

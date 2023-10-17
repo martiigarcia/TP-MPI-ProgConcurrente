@@ -1,6 +1,8 @@
+package ejemplosExplicacion;
+
 import mpi.MPI;
 
-public class Ejercicio2 {
+public class Explicacion2 {
     public static void main(String[] args) throws Exception {
         // Inicializa MPI
         MPI.Init(args);
@@ -10,16 +12,18 @@ public class Ejercicio2 {
         if (rank == 0) {
             // Crea un número entero
             int numero = 1234;
+
             // Envía el número a todos los procesos esclavos
-            MPI.COMM_WORLD.Bcast(numero, 0, MPI.INT, MPI.COMM_WORLD.Get_size() - 1);
+            MPI.COMM_WORLD.Bcast(new int[]{numero}, 0, 1, MPI.INT, 0);
         } else {
             // Recibe el número del maestro
-            int numero = MPI.COMM_WORLD.Bcast(null, 0, MPI.INT, 0,
-                    MPI.COMM_WORLD.Get_size() - 1);
+            int[] numero = new int[1];
+            MPI.COMM_WORLD.Bcast(numero, 0, 1, MPI.INT, 0);
             // Imprime el número
-            System.out.println("Proceso esclavo " + rank + ": " + numero);
+            System.out.println("Proceso esclavo " + rank + ": " + numero[0]);
         }
         // Finaliza MPI
         MPI.Finalize();
     }
 }
+

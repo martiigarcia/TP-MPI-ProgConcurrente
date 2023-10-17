@@ -19,4 +19,8 @@ MPI.COMM_WORLD.Recv(Object buf, int offset, int count, Datatype type, int from, 
 
 MPI.COMM_WORLD.Bcast(Object buf, int offset, int count, Datatype type, int root): manda un mensaje desde un proceso raiz hacia el resto de procesos.
 
-En el ejemplo de la practica: MPI.COMM_WORLD.Bcast(numero, 0, MPI.INT, MPI.COMM_WORLD.Get_size() - 1): El ultimo argumento es el rango del proceso emisor (proceso raíz) que envía el valor. En esta expresión, MPI.COMM_WORLD.Get_size() devuelve el número total de procesos en MPI para indicar a cuantos procesos mandar el mensaje, y MPI.COMM_WORLD.Get_size() - 1 se utiliza para indicar que el proceso con el rango igual al tamaño del comunicador menos uno actuará como el proceso raíz que envía el valor.
+En el ejemplo de la practica: MPI.COMM_WORLD.Bcast(numero, 0, MPI.INT, MPI.COMM_WORLD.Get_size() - 1):
+El ultimo argumento es el rango del proceso emisor (proceso raíz) que envía el valor.
+En esta expresión, MPI.COMM_WORLD.Get_size() devuelve el número total de procesos en MPI para indicar a cuantos procesos mandar el mensaje,
+y MPI.COMM_WORLD.Get_size() - 1 se utiliza para indicar que el proceso con el rango igual al tamaño del comunicador menos uno actuará como
+el proceso raíz que envía el valor.
