@@ -22,16 +22,13 @@ public class Ejercicio4 {
             MPI.Finalize();
             return;
         }
-
-        int arregloTotalSize = size * 2;
-//                (size%2==0)?size*3:size*2;
-        int tamañoSubArray = 2;
-        //(int) Math.ceil((double) arregloTotalSize / (size - 1));
+        //se asigna un tamaño al arreglo en base a la cantidad procesos
+        int tamañoTotalArreglo = size * 2;
 
         if (rank == 0) {
             // Crea el arreglo completo en el proceso maestro (rango 0)
-            int[] arregloTotal = new int[arregloTotalSize];
-            for (int i = 0; i < arregloTotalSize; i++) {
+            int[] arregloTotal = new int[tamañoTotalArreglo];
+            for (int i = 0; i < tamañoTotalArreglo; i++) {
                 arregloTotal[i] = i + 1;
             }
 
@@ -39,7 +36,7 @@ public class Ejercicio4 {
             ArrayList<Integer> subArray = new ArrayList<>();
             int cont = 0;
 
-            for (int i = 0; i < arregloTotalSize; i++) {
+            for (int i = 0; i < tamañoTotalArreglo; i++) {
                 subArray.add(arregloTotal[i]);
 
                 if (todosLosArrays.size()<=cont) {
@@ -60,6 +57,9 @@ public class Ejercicio4 {
             for (ArrayList<Integer> i : todosLosArrays) {
                 cont++;
                 int[] arrayEnviados = i.stream().mapToInt(Integer::intValue).toArray();
+                int length=arrayEnviados.length;
+                // Envía la longitud del arreglo primero
+                MPI.COMM_WORLD.Send(new int[]{length}, 0, 1, MPI.INT, cont, 0);
 
                 MPI.COMM_WORLD.Send(arrayEnviados, 0, arrayEnviados.length, MPI.INT, cont, 0);
             }
@@ -75,8 +75,11 @@ public class Ejercicio4 {
             int sumaTotalFinal = Arrays.stream(resultadosParciales).sum();
             System.out.println("Resultado: " + sumaTotalFinal);
         } else {
-            int[] sumArray = new int[tamañoSubArray+1];
+            int[] lengthArray = new int[1];
+            MPI.COMM_WORLD.Recv(lengthArray, 0, 1, MPI.INT, 0, 0);
+            int[] sumArray = new int[lengthArray[0]];
             MPI.COMM_WORLD.Recv(sumArray, 0, sumArray.length, MPI.INT, 0, 0);
+
             System.out.println("el proceso:" + rank + " recibe el arreglo: " + Arrays.toString(sumArray));
             int resultado = Arrays.stream(sumArray).sum();
             MPI.COMM_WORLD.Barrier();
