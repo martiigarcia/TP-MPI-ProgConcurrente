@@ -1,4 +1,4 @@
-Para cada archivo Main que se haga se tiene que ir al "Edit Run Configuration" como indicaba el video:
+Para cada archivo Main que se haga se tiene que ir al "Edit Configuration" como indicaba el video:
 
 https://www.youtube.com/watch?v=p_SUbcf0nCk
 
@@ -7,5 +7,5 @@ https://www.youtube.com/watch?v=p_SUbcf0nCk
 Sin eso no va a funcionar y les va a tirar error en rojito.
 ![img_2.png](images-readme/img_2.png)
 
-* Los comandos estos son lo mismo q ejecutar el run directamente, asique no es necesario usarlos
+* Los comandos estos son lo mismo q ejecutar el run directamente
 ![img_3.png](images-readme/img_3.png)
