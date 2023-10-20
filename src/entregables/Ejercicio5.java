@@ -30,6 +30,7 @@ public class Ejercicio5 {
         int arregloTotalSize = size * 2;
 
         if (rank == 0) {
+
             // Crea el arreglo completo en el proceso maestro (rango 0)
             int[] arrayA = new int[arregloTotalSize];
             int[] arrayB = new int[arregloTotalSize];
@@ -72,11 +73,12 @@ public class Ejercicio5 {
                 }
 
             }
-//mostrar allArray
-            cont=1;
+
+            //mostrar allArray
+            cont = 1;
             System.out.print("Array a distribuir:[");
             for (ArrayList<int[]> innerList : allArrays) {
-                System.out.print("Proceso "+cont+" =[");
+                System.out.print("Proceso " + cont + " =[");
                 for (int[] arr : innerList) {
                     System.out.print("[");
                     for (int i = 0; i < arr.length; i++) {
@@ -99,7 +101,7 @@ public class Ejercicio5 {
                 sendArray = i.stream()
                         .flatMapToInt(Arrays::stream)
                         .toArray();
-              //  System.out.println("El Rank "+cont+" calcula el producto escalar de: " +Arrays.toString(sendArray));
+                //  System.out.println("El Rank "+cont+" calcula el producto escalar de: " +Arrays.toString(sendArray));
                 int length = sendArray.length;
                 // Envía la longitud del arreglo primero
                 MPI.COMM_WORLD.Send(new int[]{length}, 0, 1, MPI.INT, cont, 0);
@@ -120,7 +122,9 @@ public class Ejercicio5 {
             // Calcula la suma total
             int sumaTotalFinal = Arrays.stream(resultadosParciales).sum();
             System.out.println("Resultado total es: " + sumaTotalFinal);
+
         } else {
+
             //recibe el tamaño del arreglo
             int[] lengthArray = new int[1];
             MPI.COMM_WORLD.Recv(lengthArray, 0, 1, MPI.INT, 0, 0);
@@ -134,7 +138,7 @@ public class Ejercicio5 {
                 }
                 result += scalarArray[i] * scalarArray[i + 1];
             }
-            System.out.println("Rank:"+rank+",el resultado del producto escalar de "+ Arrays.toString(scalarArray)+" es: "+result);
+            System.out.println("Rank:" + rank + ",el resultado del producto escalar de " + Arrays.toString(scalarArray) + " es: " + result);
             MPI.COMM_WORLD.Barrier();
             MPI.COMM_WORLD.Send(new int[]{result}, 0, 1, MPI.INT, 0, 0);
             MPI.COMM_WORLD.Barrier();

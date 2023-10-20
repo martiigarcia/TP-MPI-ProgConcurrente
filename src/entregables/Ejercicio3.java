@@ -21,27 +21,27 @@ public class Ejercicio3 {
         }
 
         //Se declara a dónde debe dirigirse el mensaje, en este caso al proceso anterior o al siguiente
-        int siguiente= (rank + 1) % size;
-        int anterior= (rank - 1 + size) %size;
+        int siguiente = (rank + 1) % size;
+        int anterior = (rank - 1 + size) % size;
 
-        String mensaje= "Soy tu proceso vecino.";
+        String mensaje = "Soy tu proceso vecino.";
         char[] receivedMessage = new char[30];
 
 
-        if (rank == 0){
+        if (rank == 0) {
             MPI.COMM_WORLD.Send(mensaje.toCharArray(), 0, mensaje.length(), MPI.CHAR, siguiente, 0);
-            System.out.println("El proceso "+rank+" ha enviado el mensaje");
+            System.out.println("El proceso " + rank + " ha enviado el mensaje");
 
         }
 
-            MPI.COMM_WORLD.Recv(receivedMessage, 0, receivedMessage.length, MPI.CHAR, anterior, 0);
-            System.out.println("El proceso "+rank+" ha recibido el mensaje: " + String.valueOf(receivedMessage));
+        MPI.COMM_WORLD.Recv(receivedMessage, 0, receivedMessage.length, MPI.CHAR, anterior, 0);
+        System.out.println("El proceso " + rank + " ha recibido el mensaje: " + String.valueOf(receivedMessage));
 
 
-            if(rank != 0) {
-                MPI.COMM_WORLD.Send(mensaje.toCharArray(), 0, mensaje.length(), MPI.CHAR, siguiente, 0);
-                System.out.println("El proceso " + rank + " ha enviado el mensaje");
-            }
+        if (rank != 0) {
+            MPI.COMM_WORLD.Send(mensaje.toCharArray(), 0, mensaje.length(), MPI.CHAR, siguiente, 0);
+            System.out.println("El proceso " + rank + " ha enviado el mensaje");
+        }
 
         MPI.Finalize();
 

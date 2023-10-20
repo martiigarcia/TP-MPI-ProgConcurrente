@@ -26,6 +26,7 @@ public class Ejercicio4 {
         int tamañoTotalArreglo = size * 2;
 
         if (rank == 0) {
+
             // Crea el arreglo completo en el proceso maestro (rango 0)
             int[] arregloTotal = new int[tamañoTotalArreglo];
             for (int i = 0; i < tamañoTotalArreglo; i++) {
@@ -39,7 +40,7 @@ public class Ejercicio4 {
             for (int i = 0; i < tamañoTotalArreglo; i++) {
                 subArray.add(arregloTotal[i]);
 
-                if (todosLosArrays.size()<=cont) {
+                if (todosLosArrays.size() <= cont) {
                     todosLosArrays.add(cont, subArray);
                     subArray = new ArrayList<>();
                 } else {
@@ -57,7 +58,7 @@ public class Ejercicio4 {
             for (ArrayList<Integer> i : todosLosArrays) {
                 cont++;
                 int[] arrayEnviados = i.stream().mapToInt(Integer::intValue).toArray();
-                int length=arrayEnviados.length;
+                int length = arrayEnviados.length;
                 // Envía la longitud del arreglo primero
                 MPI.COMM_WORLD.Send(new int[]{length}, 0, 1, MPI.INT, cont, 0);
 
@@ -74,7 +75,9 @@ public class Ejercicio4 {
             // Calcula la suma total
             int sumaTotalFinal = Arrays.stream(resultadosParciales).sum();
             System.out.println("Resultado: " + sumaTotalFinal);
+
         } else {
+
             int[] lengthArray = new int[1];
             MPI.COMM_WORLD.Recv(lengthArray, 0, 1, MPI.INT, 0, 0);
             int[] sumArray = new int[lengthArray[0]];
